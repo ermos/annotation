@@ -65,6 +65,9 @@ func ToAPI(rv reflect.Value, ar annotation.Result) (err error) {
 	for _, list := range mapper {
 		var a API
 		for _, item := range list {
+			if a.Controller == "" {
+				a.Controller = item.Method
+			}
 			err = a.insert(item.Key, item.Data)
 			if err != nil {
 				return
