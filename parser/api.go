@@ -1,12 +1,12 @@
 package parser
 
 import (
-"errors"
-"github.com/ermos/annotation"
-"reflect"
-"regexp"
-"strconv"
-"strings"
+	"errors"
+	"github.com/ermos/annotation"
+	"reflect"
+	"regexp"
+	"strconv"
+	"strings"
 )
 
 type API struct {
@@ -121,6 +121,8 @@ func (a *API) _route(data string) error {
 func (a *API) _auth(data string) error {
 	rgx := regexp.MustCompile(`(?m)(?:"|')(.*?)(?:"|')`)
 	for _, role := range rgx.FindAllString(data, -1) {
+		role = strings.Trim("\"", "")
+		role = strings.Trim("'", "")
 		a.Authorization = append(a.Authorization, role)
 	}
 	return nil
@@ -129,6 +131,8 @@ func (a *API) _auth(data string) error {
 func (a *API) _middleware(data string, before bool) error {
 	rgx := regexp.MustCompile(`(?m)(?:"|')(.*?)(?:"|')`)
 	for _, mw := range rgx.FindAllString(data, -1) {
+		mw = strings.Trim("\"", "")
+		mw = strings.Trim("'", "")
 		if before {
 			a.Middleware.Before = append(a.Middleware.Before, mw)
 		} else {
