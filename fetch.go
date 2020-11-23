@@ -1,10 +1,12 @@
 package annotation
 
 import (
+	"encoding/json"
 	"errors"
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"io/ioutil"
 	"reflect"
 	"regexp"
 	"strings"
@@ -19,7 +21,7 @@ type Annotation struct {
 }
 
 // Parse controller dir for extract all annotation and make a json file of their.
-func Fetch (dir string, v interface{}, resultFunc func(reflect.Value, Result) error) error {
+func Fetch(dir string, v interface{}, resultFunc func(reflect.Value, Result) error) error {
 	var result Result
 	// Get all comments
 	fset := token.NewFileSet()
@@ -60,6 +62,15 @@ func Fetch (dir string, v interface{}, resultFunc func(reflect.Value, Result) er
 	}
 	// Run custom func
 	return resultFunc(rv, result)
+}
+
+// Save interface into own file (like json)
+func Save(v interface{}, output string) error {
+	b, err := json.MarshalIndent(v, "", " ")
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(output, b, 0644)
 }
 
 func cleanAnnotations(value string) string {
