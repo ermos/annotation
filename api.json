@@ -1,0 +1,11 @@
+[
+ {
+  "controller": "test",
+  "routes": [
+   {
+    "method": "GET",
+    "route": "/test"
+   }
+  ]
+ }
+]
