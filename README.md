@@ -35,6 +35,9 @@ The most important thing to know before starting to use it, **annotations are ge
 
 The inconvenient about this solution, you need to pass the `json` file on your production server too. You can solve it with embed you're `json` file into you're binary when you compile it. You have some awesome library to do that like [packr](https://github.com/gobuffalo/packr) or [pkger](https://github.com/markbates/pkger).
 
+**Update** : Go 1.16 include a new embed system. Now, you can directly import your json file into your binary with
+``go:embed`` directive, see more information [here](https://golang.org/pkg/embed/).
+
 ## Simple Example
 
 Work in progress..
